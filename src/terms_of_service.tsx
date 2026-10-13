@@ -18,7 +18,7 @@ const Double_Button = () => {
                 onClose={handleClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
-                PaperProps={{
+                slotProps={{ paper: {
                     style: {
                         display: 'flex',
                         justifyContent: 'center',
@@ -33,7 +33,7 @@ const Double_Button = () => {
                         width: '360px',
                         overflow: 'hidden'
                     },
-                }}
+                } }}
             >
                 <DialogTitle id="alert-dialog-title" sx={{ textAlign: 'center', fontSize: 'large' }} >
                     利用規約
