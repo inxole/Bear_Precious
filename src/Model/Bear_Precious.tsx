@@ -8,14 +8,14 @@ import { useRef } from 'react'
 import { useGLTF, useAnimations } from '@react-three/drei'
 import { GLTF } from 'three-stdlib'
 import { Model_in_Action } from '../Bear_atom'
-import { ThreeEvent } from '@react-three/fiber'
+import { ThreeEvent, ThreeElements, ObjectMap } from '@react-three/fiber'
 import { useAtom } from 'jotai'
 
 interface CanvasClickProps {
   CallBack: (e: ThreeEvent<MouseEvent>) => void
 }
 
-type GLTFResult = GLTF & {
+type GLTFResult = GLTF & ObjectMap & {
   nodes: {
     Cube003: THREE.SkinnedMesh
     Cube003_1: THREE.SkinnedMesh
@@ -45,7 +45,7 @@ type GLTFResult = GLTF & {
     Eye: THREE.MeshStandardMaterial
     Sewing_shader: THREE.MeshStandardMaterial
   }
-  animation: GLTFAction[]
+  animations: GLTFAction[]
 }
 
 type ActionName = 'No_Motion' | 'Standby_Motion'
@@ -55,7 +55,7 @@ interface GLTFAction extends THREE.AnimationClip {
 
 // type ContextType = Record<string, React.ForwardRefExoticComponent<JSX.IntrinsicElements['skinnedMesh'] | JSX.IntrinsicElements['bone']>>
 
-const Bear_Precious = (props: JSX.IntrinsicElements['positionMesh'] & CanvasClickProps) => {
+const Bear_Precious = (props: ThreeElements['group'] & CanvasClickProps) => {
   const group = useRef<THREE.Group>(null)
   const { nodes, materials, animations } = useGLTF('/Bear_Pretty.glb') as GLTFResult
   const { actions } = useAnimations(animations, group)

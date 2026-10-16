@@ -5,7 +5,7 @@ import Zoom_ON_OFF from "./Zoom_Button"
 import { useCallback, useRef } from "react"
 import { Model_in_Action } from "./Bear_atom"
 import Double_Button from "./terms_of_service"
-import Grid from '@mui/material/Grid2'
+import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 import { useAtomValue } from "jotai"
 
@@ -76,7 +76,7 @@ export function App() {
       <style >{inaction ? ExpansionStyles : ReductionStyles}</style>
 
       <span style={{ display: 'flex', justifyContent: 'center' }} >
-        <Box component="span" pt={1}>
+        <Box component="span" sx={{ pt: 1 }}>
           <Grid container spacing={1}>
             <Grid size={{ xs: 6 }}>
               <Zoom_ON_OFF />

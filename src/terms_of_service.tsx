@@ -10,7 +10,7 @@ const Double_Button = () => {
 
     return (
         <span style={{ display: 'flex', justifyContent: 'center' }} >
-            <Button variant="contained" color="primary" style={{ height: '60px', width: '100px' }} onClick={handleClickOpen}>
+            <Button variant="contained" color="primary" style={{ height: '60px', width: '120px' }} onClick={handleClickOpen}>
                 注意事項
             </Button>
             <Dialog
@@ -18,7 +18,7 @@ const Double_Button = () => {
                 onClose={handleClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
-                PaperProps={{
+                slotProps={{ paper: {
                     style: {
                         display: 'flex',
                         justifyContent: 'center',
@@ -33,7 +33,7 @@ const Double_Button = () => {
                         width: '360px',
                         overflow: 'hidden'
                     },
-                }}
+                } }}
             >
                 <DialogTitle id="alert-dialog-title" sx={{ textAlign: 'center', fontSize: 'large' }} >
                     利用規約
