@@ -1,43 +1,58 @@
-import { useEffect , useRef } from "react"
-import {
-    createEngine,
-    createSceneContext,
-    createDefaultCamera,
-    createHemisphericLight,
-    loadGltf,
-    addToScene,
-    attachControl,
-    registerScene,
-    startEngine,
-    vec3
-} from "@babylonjs/lite"
+import { useEffect, useRef, useState } from "react"
+import { Box } from "@mui/material"
+import { useAtomValue, useSetAtom } from "jotai"
+import { Button_Click, Model_in_Action } from "../atoms"
+import { Controls } from "./Controls"
+import { GlobalBackground } from "./GlobalBackground"
+import { SceneStatus } from "./SceneStatus"
+import { createBearScene } from "./scene"
 
-export function App(){
-	const canvasRef = useRef<HTMLCanvasElement>(null)
+export function App() {
+    const canvasRef = useRef<HTMLCanvasElement>(null)
+    const runtimeRef = useRef<ReturnType<typeof createBearScene> | null>(null)
+    const zoom = useAtomValue(Button_Click)
+    const setPlaying = useSetAtom(Model_in_Action)
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState<string | null>(null)
 
-	useEffect(()=>{
-		async function init(){
-		const canvas = canvasRef.current
-		if(!canvas) return
-		
-		const engine = await createEngine(canvas)
-		const scene = createSceneContext(engine)
+    useEffect(() => {
+        const canvas = canvasRef.current
+        if (!canvas) return
+        setLoading(true)
+        setError(null)
+        let active = true
+        const runtime = createBearScene(canvas, (playing) => {
+            if (!active) return
+            setPlaying(playing)
+        })
+        runtimeRef.current = runtime
+        void runtime.ready.then(() => {
+            if (active) setLoading(false)
+        }).catch(() => {
+            if (!active) return
+            setLoading(false)
+            setError("モデルを読み込めませんでした。ページを再読み込みしてください。")
+        })
+        return () => {
+            active = false
+            runtimeRef.current = null
+            runtime.dispose()
+            setPlaying(false)
+        }
+    }, [setPlaying])
 
-		addToScene(scene, createHemisphericLight([0, 1, 0], 1.0))
-		addToScene(scene, await loadGltf(engine, "/Bear_Pretty.glb"))
+    useEffect(() => {
+        runtimeRef.current?.setZoom(zoom)
+    }, [zoom])
 
-		const cam = createDefaultCamera(scene)
-		Object.assign(cam, { alpha: -Math.PI / 0.75, beta: Math.PI / 3, radius: 1.5, target: vec3(0, 0.35, 0) })
-		attachControl(cam, canvas, scene)
-
-		await registerScene(scene)
-		await startEngine(engine)
-		}
-
-		void init().catch(() => { return })
-	},[])
-
-	return(
-		<canvas ref={canvasRef} style={{width:'100%',height:'100%'}}/>
-	)
+    return <>
+        <GlobalBackground />
+        <Box component="main" sx={{ position: "relative", width: "100%", height: "100dvh", overflow: "hidden" }}>
+            <Box component="canvas" ref={canvasRef}
+                aria-label="ドラッグで回転、モデルをクリックするとアニメーションを再生・停止"
+                sx={{ display: "block", width: "100%", height: "100%", touchAction: "none" }} />
+            <Controls />
+            <SceneStatus loading={loading} error={error} />
+        </Box>
+    </>
 }
