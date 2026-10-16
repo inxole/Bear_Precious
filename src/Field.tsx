@@ -23,7 +23,7 @@ export function Field(props: CanvasClickProps) {
             <OrbitControls
                 minDistance={0.6}
                 maxDistance={5}
-                target={new Vector3(0, 0.6, 0)}
+                target={new Vector3(0, 0.3, 0)}
                 enablePan={false}
                 enableZoom={a_u_pushed ? true : false}
                 domElement={viewinfo.documentElement}
