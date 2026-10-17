@@ -1,5 +1,14 @@
 import { useState, useEffect } from 'react'
+import { GlobalStyles } from '@mui/material'
 import App from './App'
+
+const ThreeVerBackground = () => (
+    <GlobalStyles styles={{
+        html: { width: '100%', height: '100%', backgroundColor: 'rgba(255, 0, 0, 0.591)' },
+        body: { width: '100%', height: '100%', overflow: 'hidden', margin: 0, backgroundColor: 'rgba(207, 60, 109, 0.542)' },
+        div: { width: '100%', height: '100%', backgroundColor: 'transparent' },
+    }} />
+)
 
 function checkWebGLCapabilities() {
     const canvas = document.createElement('canvas')
@@ -52,6 +61,7 @@ const Check_webGL = () => {
 
     return (
         <div>
+            <ThreeVerBackground />
             {webGLCapable ? <App /> : <FallbackComponent />}
         </div>
     )

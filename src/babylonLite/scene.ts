@@ -3,8 +3,8 @@ import {
     createEffectRenderTask, createEffectWrapper, createEngine, createGpuPicker, createGround,
     createHemisphericLight, createPbrMaterial, createPcfDirectionalShadowGenerator, createRenderTask,
     createSceneContext, createSurfaceRenderTargetTexture,
-    disposeEngine, disposePicker, disposeScene, enableSkeletonShadows, getFrameGraph,
-    goToFrame, loadGltf, pickAsync, playAnimation,
+    disposeEngine, disposePicker, disposeScene, enableSkeletonShadows, enableSurfaceResizeObserver, getFrameGraph,
+    goToFrame, loadGltf, onRenderTargetTextureResize, pickAsync, playAnimation,
     registerSceneWithShadowSupport, setCameraLimits, setEffectTexture, setEffectUniforms, setShadowOnly,
     setShadowTaskCasterMeshes, startEngine, stopAnimation, stopEngine, vec3,
 } from "@babylonjs/lite"
@@ -42,6 +42,7 @@ export function createBearScene(
         try {
             engine = await createEngine(canvas, { alphaMode: "premultiplied" })
             if (disposed) return
+            detach.push(enableSurfaceResizeObserver(engine))
             scene = createSceneContext(engine, { defaultRenderTask: false })
             scene.clearColor = { r: 0, g: 0, b: 0, a: 0 }
             addToScene(scene, createHemisphericLight([0, 1, 0], 1))
@@ -100,13 +101,14 @@ export function createBearScene(
             if (disposed) return
 
             // 影描画の後、シーンをオフスクリーンに描画し、波紋ポストプロセスで画面に合成する。
-            const { rt: sceneTarget, texture: sceneTexture } = createSurfaceRenderTargetTexture(engine, {
+            const sceneTargetResult = createSurfaceRenderTargetTexture(engine, {
                 lbl: "bear-scene-source",
                 format: engine.format,
                 dFormat: "depth24plus-stencil8",
                 samples: 1,
                 size: engine,
             })
+            const { rt: sceneTarget, texture: sceneTexture } = sceneTargetResult
             const sceneTask = createRenderTask(
                 { name: "bear-scene-source", rt: sceneTarget, cam: camera, clrColor: scene.clearColor, clr: true },
                 engine, scene,
@@ -152,6 +154,9 @@ export function createBearScene(
                 ],
             })
             setEffectTexture(rippleEffect, "inputTexture", sceneTexture)
+            detach.push(onRenderTargetTextureResize(sceneTargetResult, () => {
+                setEffectTexture(rippleEffect, "inputTexture", sceneTargetResult.texture)
+            }))
             const rippleTask = createEffectRenderTask(
                 { name: "bear-ripple-post", effect: rippleEffect, target: engine.scRT, clear: true },
                 engine, scene,
