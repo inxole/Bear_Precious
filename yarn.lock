@@ -341,21 +341,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babylonjs/lite@npm:^1.34.0":
-  version: 1.34.0
-  resolution: "@babylonjs/lite@npm:1.34.0"
+"@babylonjs/lite@npm:^1.35.0":
+  version: 1.35.0
+  resolution: "@babylonjs/lite@npm:1.35.0"
+  dependencies:
+    "@types/webxr": "npm:^0.5.0"
   peerDependencies:
     "@babylonjs/havok": ^1.3.0
-    "@types/webxr": ^0.5.0
     "@webgpu/types": ^0.1.52
   peerDependenciesMeta:
     "@babylonjs/havok":
       optional: true
-    "@types/webxr":
-      optional: true
     "@webgpu/types":
       optional: true
-  checksum: 10c0/dfa66ecf11a8d95932d85cd8109b6981df33929ba491fb0bda31ff505f6b806db175313e76df709cbbc2f5a098ce42a0d117a9a8fc556cf1be94d270c633d133
+  checksum: 10c0/e0137d8fc02939c1df3a7b5872ed0f3dc5c5c72e28a83c986fdf3e279d1537c43f5f25738ca58727c0d1b564a34b0f279df542f7e9dd878301c7f9d96a05f399
   languageName: node
   linkType: hard
 
@@ -1597,7 +1596,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/webxr@npm:>=0.5.17":
+"@types/webxr@npm:>=0.5.17, @types/webxr@npm:^0.5.0":
   version: 0.5.24
   resolution: "@types/webxr@npm:0.5.24"
   checksum: 10c0/ff59ffd390d06ca3f89ab2531d583ac10bc5e2ab82e5a01ecc40fbc365224a3375e7caa5b14649cf6141db21fb024940da7ad2bd8faa3cd497a6665257cb53b5
@@ -2045,7 +2044,7 @@ __metadata:
     "@babylonjs/core": "npm:^9.30.0"
     "@babylonjs/gui": "npm:^9.30.0"
     "@babylonjs/inspector": "npm:^9.30.0"
-    "@babylonjs/lite": "npm:^1.34.0"
+    "@babylonjs/lite": "npm:^1.35.0"
     "@babylonjs/loaders": "npm:^9.30.0"
     "@babylonjs/materials": "npm:^9.30.0"
     "@babylonjs/post-processes": "npm:^9.30.0"
