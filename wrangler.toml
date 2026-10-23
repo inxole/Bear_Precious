@@ -2,7 +2,3 @@
 
 name = "bear-precious"
 pages_build_output_dir = "./dist"
-
-[vars]
-NODE_VERSION = "18.18.0"
-YARN_VERSION = "4.6.0"

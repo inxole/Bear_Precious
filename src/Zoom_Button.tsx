@@ -35,7 +35,7 @@ const Zoom_ON_OFF = () => {
                 onClose={handleClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
-                PaperProps={{
+                slotProps={{ paper: {
                     style: {
                         display: 'flex',
                         justifyContent: 'center',
@@ -49,7 +49,7 @@ const Zoom_ON_OFF = () => {
                         height: '200px',
                         overflow: 'hidden'
                     },
-                }}
+                } }}
             >
                 <DialogTitle id="alert-dialog-title" sx={{ textAlign: 'center' }}>
                     ZoomのON・OFFを切り替えます。
