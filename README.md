@@ -1,29 +1,37 @@
-# Bear Precious(クマ型：プリティ)
+English | [日本語](README.ja.md)
 
-## アプリゲーム「nieR Re[in]canation」に出てくるオトモを作成しました。
- - 2024年4月30日にサービスを終了しています。
- - オトモ名「クマ型：プリティ」の３Dヴューワーをサイトで作成しました。
- - オトモをクリックするとアニメーションが開始され、もう一度クリックするとアニメーションが停止します。
- - 営利目的で作成していません。
+# Bear Precious
 
-### このプロジェクトは次の目的で作っています。
-1. 技術的アピールを行うため。
-2. ファンとして応援したいため。二次創作として作成しています。
+## Overview
+A 3D viewer that displays and animates the model of "Bear-type: Pretty," a companion character from the mobile game *NieR Re[in]carnation*.
 
-## Usage
-1. node.jsとyarnをインストール
-```bash
-$ sudo apt update
-$ sudo apt install nodejs yarn
-```
-2. パッケージをインストール
+- This is a fan-made (derivative work) project based on a companion character from a game whose service ended on April 30, 2024.
+- Click the companion to start its animation; click again to stop it.
+- This project is non-commercial.
+
+## Live URL
+https://bear-precious.inxole.jp/
+
+## Installation
+### Requirements
+- node.js v24.18.0
+- yarn 4.18.1
+
+### Steps
+1. Install node.js and yarn
+2. Install dependencies
 ```bash
 $ yarn install
 ```
-3. ローカルで確認
+3. Run locally
 ```bash
 $ yarn dev
 ```
-## バージョン
-- node.js 18.18.0
-- yarn 4.6.0
+
+## Roadmap
+- Extract this project as a git submodule so it can be referenced from other projects
+- Add more animations
+- Add effects
+- Create field models
+
+Note: The items above are planned work and may change.
